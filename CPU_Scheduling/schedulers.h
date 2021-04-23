@@ -53,14 +53,69 @@ void FCFS(Process* p, int num_process){
 }
 
 void SJF(Process* p, int num_process){
-	// To do -----------------------------
+	// To do ----------------------------- SJF non-preempty algorithms----------------------------
+	int now =0, counter =0, i =0;
+	bool isFounded = false;
+	while(counter < num_process)
+	{
+		Process* curr = NULL;
+		// find process has min brust at time now
+		if(!isFounded)
+		{
+			int minBrust = 999;
+			for(i =0; i< num_process; i++)
+			{
+				if(now >= p[i].arrive_time && p[i].completed == false && p[i].burst < minBrust)
+				{
+					curr = &p[i];
+					minBrust = curr->burst;
+				}
+			}
+			if(curr != NULL)
+			{
+				printf("id now is: %s\n", curr->id);
+				isFounded = true;
+			}
+		}
+		// if not founded, increase now 1
+		if(!isFounded)
+			now++;
+		while(isFounded)
+		{
+			if(curr->executing == false && curr->tmp_burst_ > 0)
+			{
+				curr->executing = true;
+				curr->response_time = now - curr->arrive_time;
+				curr->waiting_time = now - curr->arrive_time;
+			}
+			else if(curr->tmp_burst_ == 0)
+			{
+				isFounded = false;
+				curr->completed = true;
+				curr->executing = false;
+				++counter;
+				curr->return_time = now;
+				curr->turnaround_time = now - curr->arrive_time;
+				break;
+			}
+			curr->tmp_burst_--;
+			now++;
+		}
 
+		
+	}
 	// -----------------------------------
 }
 
 void Priority_Scheduling(Process* p, int num_process){
-	// To do -----------------------------
-
+	// To do ------------Priority scheduling pre-empty with higher number present higher priority-----------------
+	int now =0, i =0, counter =0;
+	bool isFounded = false;
+	while(counter < num_process)
+	{
+		Process *curr = NULL;
+		// find process to execute at time now
+	}
 	// -----------------------------------
 }
 
